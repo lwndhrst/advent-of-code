@@ -102,7 +102,6 @@ fn main() {
     let input = read_to_string(path).unwrap();
 
     run(&input);
-    // part_two(&input);
 }
 
 fn run(input: &str) {
