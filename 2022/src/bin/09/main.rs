@@ -148,15 +148,16 @@ struct Rope {
 }
 
 impl Rope {
-    pub fn new(x: i32, y: i32, n: usize) -> Self {
-        let position = (x, y);
+    pub fn new(n: usize) -> Self {
+        let start_pos = (0, 0);
+
         let mut head = Knot {
-            pos: position,
+            pos: start_pos,
             tail: Box::new(None),
         };
 
         for _ in 0..n {
-            head.add_knot(Knot { pos: position, tail: Box::new(None) });
+            head.add_knot(Knot { pos: start_pos, tail: Box::new(None) });
         }
 
         Self { head }
@@ -184,7 +185,7 @@ fn part_one(input: &str) {
 
     let mut visited = HashMap::<(i32, i32), usize>::new();
 
-    let mut rope = Rope::new(255, 255, 1);
+    let mut rope = Rope::new(1);
     visited.insert((*rope.head.tail).as_ref().unwrap().pos, 1);
 
     moves.iter().for_each(|m| {
@@ -210,7 +211,7 @@ fn part_two(input: &str) {
 
     let mut visited = HashMap::<(i32, i32), usize>::new();
 
-    let mut rope = Rope::new(255, 255, 9);
+    let mut rope = Rope::new(9);
     visited.insert((*rope.head.tail).as_ref().unwrap().pos, 1);
 
     moves.iter().for_each(|m| {
