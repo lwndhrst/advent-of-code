@@ -67,11 +67,14 @@ impl Dir {
                     path.push(cmd[3..].to_owned());
                 }
             } else {
-                for node in command.output.unwrap() {
-                    let mut path = path.clone();
-                    path.reverse();
-                    root.add_child(Node::from_line(&node), path);
-                }
+                let nodes = command.output.unwrap()
+                    .iter()
+                    .map(|s| Node::from_line(s))
+                    .collect::<Vec<Node>>();
+
+                let mut path = path.clone();
+                path.reverse();
+                root.add_children(nodes, path);
             }
         }
 
@@ -87,13 +90,9 @@ impl Dir {
         }
     }
 
-    pub fn add_child(&mut self, node: Node, mut path: Vec<String>) {
+    pub fn add_children(&mut self, mut nodes: Vec<Node>, mut path: Vec<String>) {
         if path.len() == 0 {
-            if self.contains(&node) {
-                return;
-            }
-
-            self.children.push(node);
+            self.children.append(&mut nodes);
             return;
         }
 
@@ -101,21 +100,11 @@ impl Dir {
         for child in self.children.iter_mut() {
             if let Node::Dir(ref mut dir) = child {
                 if dir.name == name {
-                    dir.add_child(node, path);
+                    dir.add_children(nodes, path);
                     break;
                 }
             }
         }
-    }
-
-    pub fn contains(&self, node: &Node) -> bool {
-        for child in &self.children {
-            if child.name() == node.name() {
-                return true;
-            }
-        }
-
-        false
     }
 
     pub fn size(&self) -> u32 {
