@@ -156,7 +156,7 @@ impl Rope {
             tail: Box::new(None),
         };
 
-        for _ in 0..n {
+        for _ in 0..(n - 1) {
             head.add_knot(Knot { pos: start_pos, tail: Box::new(None) });
         }
 
@@ -185,7 +185,7 @@ fn part_one(input: &str) {
 
     let mut visited = HashMap::<(i32, i32), usize>::new();
 
-    let mut rope = Rope::new(1);
+    let mut rope = Rope::new(2);
     visited.insert((*rope.head.tail).as_ref().unwrap().pos, 1);
 
     moves.iter().for_each(|m| {
@@ -211,7 +211,7 @@ fn part_two(input: &str) {
 
     let mut visited = HashMap::<(i32, i32), usize>::new();
 
-    let mut rope = Rope::new(9);
+    let mut rope = Rope::new(10);
     visited.insert((*rope.head.tail).as_ref().unwrap().pos, 1);
 
     moves.iter().for_each(|m| {
