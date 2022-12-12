@@ -16,8 +16,9 @@ mod new_line {
     pub const DOUBLE: &str = "\n\n";
 }
 
-// lowest common denominator
-const LCD: usize = 2 * 7 * 3 * 17 * 11 * 19 * 5 * 13;
+// for part 2:
+// product of all the prime numbers tested against
+const M: usize = 2 * 7 * 3 * 17 * 11 * 19 * 5 * 13;
 
 struct Monkey {
     pub idx: usize,
@@ -66,7 +67,7 @@ impl Monkey {
         self.count += 1;
 
         let item = self.items.pop().unwrap();
-        let worry = (self.operation)(item) % LCD;
+        let worry = (self.operation)(item) % M;
 
         if (self.test)(worry) {
             (self.throw_true, worry)
