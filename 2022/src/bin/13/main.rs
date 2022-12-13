@@ -27,7 +27,7 @@ fn main() {
 fn part_one(input: &str) {
     let answer = input
         .split(new_line::DOUBLE)
-        .filter(|s| s.len() > 0)
+        .filter(|s| !s.is_empty())
         .enumerate()
         .map(|(i, input)| (i, split_package(input)))
         .filter(|(_, (l, r))| check_order(l, r))
@@ -38,10 +38,7 @@ fn part_one(input: &str) {
 }
 
 fn part_two(input: &str) {
-    let mut input = input
-        .lines()
-        .filter(|s| !s.is_empty())
-        .collect::<Vec<_>>();
+    let mut input = input.lines().filter(|s| !s.is_empty()).collect::<Vec<_>>();
 
     let dividers = vec!["[[2]]", "[[6]]"];
     input.append(&mut dividers.clone());
@@ -125,10 +122,6 @@ fn compare_num_to_list(num: u32, list: &mut impl Iterator<Item = Token>) -> Orde
     Ordering::Equal
 }
 
-fn compare_to_range() -> Ordering {
-    todo!()
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Token {
     Open,
@@ -146,17 +139,16 @@ fn parse_tokens(input: &str) -> impl Iterator<Item = Token> + '_ {
         .chain(std::iter::once(Token::Close))
 }
 
-fn scan_token(accumulator: &mut Option<u32>, current_symbol: u8, next_symbol: u8) -> Option<Token> {
-    let acc = accumulator.take();
+fn scan_token(acc: &mut Option<u32>, current_symbol: u8, next_symbol: u8) -> Option<Token> {
     match current_symbol {
         b'[' => Some(Token::Open),
         b']' => Some(Token::Close),
         b',' => None,
         x if x.is_ascii_digit() => {
             let digit = x as u32;
-            let value = acc.unwrap_or(0) * 10 + digit;
+            let value = acc.take().unwrap_or(0) * 10 + digit;
             if next_symbol.is_ascii_digit() {
-                *accumulator = Some(value);
+                *acc = Some(value);
                 None
             } else {
                 Some(Token::Num(value))
