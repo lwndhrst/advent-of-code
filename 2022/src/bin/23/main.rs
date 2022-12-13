@@ -1,8 +1,5 @@
 #![allow(dead_code)]
 
-use std::fs::read_to_string;
-use std::path::PathBuf;
-
 #[cfg(target_os = "windows")]
 mod new_line {
     pub const SINGLE: &str = "\r\n";
@@ -16,8 +13,7 @@ mod new_line {
 }
 
 fn main() {
-    let path = PathBuf::from("src/bin/23/input.txt");
-    let input = read_to_string(path).unwrap();
+    let input = include_str!("input.txt");
 
     part_one(&input);
     part_two(&input);
