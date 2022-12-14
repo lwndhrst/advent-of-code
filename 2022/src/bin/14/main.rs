@@ -57,31 +57,29 @@ fn simulate(
 
     loop {
         let (mut x, mut y) = src;
+
         let mut settled = false;
         while !settled {
             if finish_condition(y, grid) {
                 return count;
             }
 
-            match grid[y + 1][x] {
-                '.' => {
+            if grid[y + 1][x] == '.' {
+                y += 1;
+                continue;
+            } else {
+                if grid[y + 1][x - 1] == '.' {
+                    x -= 1;
                     y += 1;
                     continue;
-                }
-                _ => {
-                    if grid[y + 1][x - 1] == '.' {
-                        x -= 1;
-                        y += 1;
-                        continue;
-                    } else if grid[y + 1][x + 1] == '.' {
-                        x += 1;
-                        y += 1;
-                        continue;
-                    } else {
-                        grid[y][x] = 'o';
-                        settled = true;
-                        count += 1;
-                    }
+                } else if grid[y + 1][x + 1] == '.' {
+                    x += 1;
+                    y += 1;
+                    continue;
+                } else {
+                    grid[y][x] = 'o';
+                    settled = true;
+                    count += 1;
                 }
             }
         }
