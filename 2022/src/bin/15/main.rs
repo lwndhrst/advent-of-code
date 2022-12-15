@@ -85,12 +85,11 @@ fn part_two(input: &str) {
     let u = 4_000_000;
     let (mut x, mut y) = (0, 0);
 
-    // I have no exuse for this
+    // I have no excuse for this
     for row in l..=u {
         let ranges = sensors
             .iter()
             .filter_map(|s| s.get_range_in_radius(row))
-            .filter(|(from, to)| (l..=u).contains(from) || (l..=u).contains(to) || (*from < l && *to > u))
             .map(|(from, to)| (from.clamp(l, u), to.clamp(l, u)))
             .collect::<Vec<_>>();
 
@@ -102,7 +101,7 @@ fn part_two(input: &str) {
         }
     }
 
-    let answer = x as i64 * 4_000_000 + y as i64;
+    let answer = x as i64 * u as i64 + y as i64;
     println!("Part 2: {:?}", answer);
 }
 
