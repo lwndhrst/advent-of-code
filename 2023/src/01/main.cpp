@@ -57,6 +57,7 @@ main()
     while (std::getline(input, line)) {
         std::string num;
 
+        // string digits
         char first_val = '0';
         char last_val = '0';
         int first_pos = line.length();
@@ -79,13 +80,15 @@ main()
                     continue;
                 }
 
-                if (pos > last_pos && pos < line.length()) {
+                if (pos > last_pos) {
                     last_pos = pos;
                     last_val = val;
+                    break;
                 }
             }
         }
 
+        // number digits
         for (int i = 0;; ++i) {
             if (line[i] >= '1' && line[i] <= '9') {
                 if (i < first_pos) {
