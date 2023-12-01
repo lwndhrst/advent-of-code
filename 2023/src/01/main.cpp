@@ -8,7 +8,7 @@ main()
     std::ifstream input;
     std::string line;
 
-    input.open("01/input");
+    input.open("src/01/input");
     while (std::getline(input, line)) {
         std::cout << line << std::endl;
     }
