@@ -60,7 +60,7 @@ main()
         char first_val = '0';
         char last_val = '0';
         int first_pos = line.length();
-        int last_pos = 0;
+        int last_pos = -1;
         for (const auto &[key, val] : map) {
             int pos = line.find(key);
             if (pos == -1) {
