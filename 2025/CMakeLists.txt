@@ -10,3 +10,4 @@ if(CMAKE_EXPORT_COMPILE_COMMANDS)
 endif()
 
 add_executable(day-01 src/01/main.cpp)
+add_executable(day-02 src/02/main.cpp)

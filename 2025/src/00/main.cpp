@@ -4,7 +4,7 @@
 
 #define INPUT_PATH "src/00/input.txt"
 
-int
+long
 part_one()
 {
     std::ifstream input;
@@ -22,7 +22,7 @@ part_one()
     return 0;
 }
 
-int
+long
 part_two()
 {
     std::ifstream input;
