@@ -11,3 +11,4 @@ endif()
 
 add_executable(day-01 src/01/main.cpp)
 add_executable(day-02 src/02/main.cpp)
+add_executable(day-03 src/03/main.cpp)
