@@ -82,23 +82,25 @@ part_two()
 
     std::sort(ranges.begin(), ranges.end());
 
-    // merge ranges
-    std::vector<std::pair<uint64_t, uint64_t>> merged_ranges;
     std::pair<uint64_t, uint64_t> current_range = ranges[0];
-    for (const auto &[lb, ub] : ranges)
+    for (int i = 1; i < ranges.size(); ++i)
     {
+        uint64_t lb = ranges[i].first;
+        uint64_t ub = ranges[i].second;
+
         if (lb <= current_range.second)
+        {
             current_range.second = std::max(current_range.second, ub);
+
+            if (i == ranges.size() - 1)
+                result += (current_range.second - current_range.first) + 1;
+        }
         else
         {
-            merged_ranges.push_back(current_range);
+            result += (current_range.second - current_range.first) + 1;
             current_range = {lb, ub};
         }
     }
-    merged_ranges.push_back(current_range);
-
-    for (const auto &[lb, ub] : merged_ranges)
-        result += (ub - lb) + 1;
 
     input.close();
 
