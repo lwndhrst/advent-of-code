@@ -1,10 +1,11 @@
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
 
 #define INPUT_PATH "src/00/input.txt"
 
-long
+int64_t
 part_one()
 {
     std::ifstream input;
@@ -22,7 +23,7 @@ part_one()
     return 0;
 }
 
-long
+int64_t
 part_two()
 {
     std::ifstream input;
