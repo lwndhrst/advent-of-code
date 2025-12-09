@@ -11,7 +11,7 @@
 struct rect {
     int64_t x_min, x_max, y_min, y_max;
 
-    inline bool is_colliding(const rect &other)
+    inline bool collides(const rect &other)
     {
         return x_min < other.x_max &&
                x_max > other.x_min &&
@@ -84,13 +84,11 @@ part_two()
         return std::get<0>(a) > std::get<0>(b);
     });
 
-    for (const auto &[size, i, j] : areas)
-    {
-    }
-
     return 0;
 }
 
+// Correct for test case but not actual input.
+//
 // int64_t
 // part_two()
 // {
