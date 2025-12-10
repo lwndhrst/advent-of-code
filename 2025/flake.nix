@@ -14,6 +14,8 @@
           clang-tools
           cmake
           ninja
+
+          z3
         ];
       };
     };
