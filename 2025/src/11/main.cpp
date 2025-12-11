@@ -177,25 +177,34 @@ part_two()
         }
     }
 
-    // Split into multiple path counting stages
     size_t src = label_to_index["svr"];
     size_t dac = label_to_index["dac"];
     size_t fft = label_to_index["fft"];
     size_t dst = label_to_index["out"];
 
-    const auto &count_paths = [&](size_t from, size_t to) {
-        std::vector<size_t> paths(nodes.size(), 0);
-        paths[from] = 1;
+    // Count paths from each relevant node to every other node
 
-        for (const size_t &node : topo_order)
-            for (const size_t &child : nodes[node].children)
-                paths[child] += paths[node];
+    std::vector<size_t> from_src(nodes.size(), 0);
+    from_src[src] = 1;
 
-        return paths[to];
-    };
+    std::vector<size_t> from_dac(nodes.size(), 0);
+    from_dac[dac] = 1;
 
-    size_t paths_dac_fft = count_paths(src, dac) * count_paths(dac, fft) * count_paths(fft, dst);
-    size_t paths_fft_dac = count_paths(src, fft) * count_paths(fft, dac) * count_paths(dac, dst);
+    std::vector<size_t> from_fft(nodes.size(), 0);
+    from_fft[fft] = 1;
+
+    for (const size_t &node : topo_order)
+    {
+        for (const size_t &child : nodes[node].children)
+        {
+            from_src[child] += from_src[node];
+            from_dac[child] += from_dac[node];
+            from_fft[child] += from_fft[node];
+        }
+    }
+
+    size_t paths_dac_fft = from_src[dac] * from_dac[fft] * from_fft[dst]; // src -> dac -> fft -> dst
+    size_t paths_fft_dac = from_src[fft] * from_fft[dac] * from_dac[dst]; // src -> fft -> dac -> dst
 
     return paths_dac_fft + paths_fft_dac;
 }
