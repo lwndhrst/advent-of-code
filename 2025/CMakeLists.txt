@@ -21,7 +21,7 @@ add_executable(day-07 src/07/main.cpp)
 add_executable(day-08 src/08/main.cpp)
 add_executable(day-09 src/09/main.cpp)
 add_executable(day-10 src/10/main.cpp)
-# add_executable(day-11 src/11/main.cpp)
+add_executable(day-11 src/11/main.cpp)
 # add_executable(day-12 src/12/main.cpp)
 
 target_include_directories(day-10 PRIVATE ${Z3_CXX_INCLUDE_DIRS})
