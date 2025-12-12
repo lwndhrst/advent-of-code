@@ -25,12 +25,23 @@ split(const std::string &s, char d)
 // Always 6 shapes with 3x3 size
 struct shape {
     std::array<bool, 9> positions;
+    size_t area;
 
     shape(const std::vector<std::string> &lines)
     {
+        area = 0;
+
         for (size_t i = 0; i < 3; ++i)
+        {
             for (size_t j = 0; j < 3; ++j)
-                positions[i * 3 + j] = lines[i][j] == '#';
+            {
+                bool covered = lines[i][j] == '#';
+                if (covered)
+                    ++area;
+
+                positions[i * 3 + j] = covered;
+            }
+        }
     }
 
     // rotate clockwise 90 degrees
@@ -139,7 +150,21 @@ part_one()
 
     input.close();
 
-    return 0;
+    int64_t result = 0;
+
+    // Really funny that this already gives the right answer...
+    for (const region &r : regions)
+    {
+        size_t total_area = 0;
+
+        for (size_t i = 0; i < 6; ++i)
+            total_area += r.shapes[i] * shapes[i].area;
+
+        if (total_area < r.width * r.height)
+            ++result;
+    }
+
+    return result;
 }
 
 int64_t
